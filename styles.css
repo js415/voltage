@@ -134,10 +134,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--gradient-blue);
     overflow: hidden;
     padding: 100px 0 80px;
 }
+
 
 .hero-background {
     position: absolute;
@@ -149,6 +149,44 @@ body {
         radial-gradient(circle at 20% 50%, rgba(0, 208, 132, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(0, 208, 132, 0.08) 0%, transparent 50%);
     opacity: 0.6;
+}
+
+.hero-sticker {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 2;
+    animation: float 3s ease-in-out infinite;
+    overflow: hidden;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    padding: 8px;
+}
+
+.sticker-image {
+    width: 150px;
+    height: auto;
+    max-width: 200px;
+    object-fit: contain;
+    object-position: center;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+    transition: transform 0.3s ease;
+    display: block;
+    background: transparent;
+}
+
+.sticker-image:hover {
+    transform: scale(1.05);
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 .hero-content {
@@ -181,6 +219,34 @@ body {
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
+}
+/* Hero Video Background */
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: 0;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
 }
 
 .btn {
@@ -724,6 +790,283 @@ section {
     margin: 0.5rem 0;
 }
 
+/* Videos Section */
+.videos {
+    background-color: var(--white);
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+}
+
+.video-card {
+    background: var(--white);
+    border-radius: 12px;
+    border: 2px solid var(--light-gray);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.video-card:hover {
+    border-color: var(--electric-green);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+}
+
+.video-thumbnail {
+    width: 100%;
+    height: 180px;
+    border-radius: 10px;
+    background: radial-gradient(circle at top, rgba(255, 255, 255, 0.2), transparent),
+                linear-gradient(135deg, #1e3a5f, #0f2537);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.play-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--electric-green);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.video-card h3 {
+    font-size: 1.3rem;
+    color: var(--primary-blue);
+    margin-bottom: 0.75rem;
+}
+
+.video-card p {
+    color: var(--gray);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+/* Team Section */
+.team {
+    background-color: var(--light-gray);
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+}
+
+.team-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 2rem 1.75rem;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.team-card:hover {
+    border-color: var(--electric-green);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+}
+
+.team-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--gradient-blue);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    margin: 0 auto 1rem;
+}
+
+.team-card h3 {
+    font-size: 1.2rem;
+    color: var(--primary-blue);
+    margin-bottom: 0.25rem;
+}
+
+.team-role {
+    font-size: 0.95rem;
+    color: var(--electric-green);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.team-bio {
+    font-size: 0.9rem;
+    color: var(--gray);
+    line-height: 1.7;
+}
+
+/* Blog Section */
+.blog {
+    background-color: var(--white);
+}
+
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+}
+
+.blog-card {
+    background: var(--white);
+    border-radius: 12px;
+    border: 2px solid var(--light-gray);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+}
+
+.blog-card:hover {
+    border-color: var(--electric-green);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+}
+
+.blog-card h3 {
+    font-size: 1.25rem;
+    color: var(--primary-blue);
+    margin-bottom: 0.75rem;
+}
+
+.blog-card p {
+    color: var(--gray);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+/* Reviews Section */
+.reviews {
+    background-color: var(--light-gray);
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+}
+
+.review-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--electric-green);
+}
+
+.review-stars {
+    color: #fbbf24;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+}
+
+.review-text {
+    font-size: 0.95rem;
+    color: var(--dark-gray);
+    line-height: 1.8;
+    margin-bottom: 0.75rem;
+}
+
+.review-author {
+    font-size: 0.9rem;
+    color: var(--gray);
+    font-weight: 500;
+}
+
+/* Happy Customers Section */
+.customers {
+    background-color: var(--white);
+}
+
+.customers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+}
+
+.customers-video-grid {
+    margin-bottom: 3rem;
+}
+
+.customer-card {
+    background: var(--white);
+    border-radius: 12px;
+    border: 2px solid var(--light-gray);
+    padding: 2rem 1.75rem;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+}
+
+.customer-card:hover {
+    border-color: var(--electric-green);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+}
+
+.customer-card h3 {
+    font-size: 1.2rem;
+    color: var(--primary-blue);
+    margin-bottom: 0.5rem;
+}
+
+.customer-card p {
+    font-size: 0.95rem;
+    color: var(--gray);
+    line-height: 1.7;
+}
+
+/* Certificates Section */
+.certificates {
+    background-color: var(--light-gray);
+}
+
+.cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+}
+
+.cert-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+    border-top: 4px solid var(--electric-green);
+    text-align: left;
+}
+
+.cert-card h3 {
+    font-size: 1.25rem;
+    color: var(--primary-blue);
+    margin-bottom: 0.75rem;
+}
+
+.cert-card p {
+    font-size: 0.95rem;
+    color: var(--gray);
+    line-height: 1.7;
+}
+
 /* Trust Section */
 .trust-section {
     background: var(--gradient-blue);
@@ -906,6 +1249,15 @@ section {
     .stat-number {
         font-size: 2.5rem;
     }
+
+    .hero-sticker {
+        top: 10px;
+        right: 10px;
+    }
+
+    .sticker-image {
+        max-width: 100px;
+    }
 }
 
 @media (max-width: 640px) {
@@ -952,6 +1304,15 @@ section {
     .footer-content {
         grid-template-columns: 1fr;
         gap: 2rem;
+    }
+
+    .hero-sticker {
+        top: 10px;
+        right: 10px;
+    }
+
+    .sticker-image {
+        max-width: 80px;
     }
 
     .quality-badges {
