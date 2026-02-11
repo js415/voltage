@@ -1,0 +1,17 @@
+# Ignore videos
+*.mp4
+*.mov
+*.avi
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore node modules (if you add later)
+node_modules/
+
+# Ignore environment files
+.env
