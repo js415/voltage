@@ -133,6 +133,89 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// Image lightbox for stabilizer and cooler galleries
+document.addEventListener('DOMContentLoaded', () => {
+    const lightbox = document.getElementById('image-lightbox');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const lightboxDescription = document.getElementById('lightbox-description');
+    const lightboxContact = document.getElementById('lightbox-contact');
+    const closeButton = document.querySelector('.lightbox-close');
+    const lightboxFrame = document.querySelector('.lightbox-frame');
+    const galleryCards = document.querySelectorAll('.stabilizer-card, .cooler-card');
+
+    if (!lightbox || !lightboxImage || !lightboxCaption || !lightboxDescription || !lightboxContact || !closeButton) return;
+
+    galleryCards.forEach(card => {
+        const image = card.querySelector('img');
+        if (image) {
+            card.style.setProperty('--product-image', `url(${JSON.stringify(image.src)})`);
+        }
+    });
+
+    function openLightbox(card) {
+        const image = card.querySelector('img');
+        const title = card.querySelector('h3');
+        const description = card.querySelector('p');
+        if (!image) return;
+
+        const productName = title ? title.textContent.trim() : image.alt;
+        const productDescription = description ? description.textContent.trim() : 'Get product details, price, and availability from JSE Classic.';
+
+        lightboxImage.src = image.src;
+        lightboxImage.alt = image.alt || '';
+        lightbox.style.setProperty('--product-image', `url(${JSON.stringify(image.src)})`);
+        if (lightboxFrame) {
+            lightboxFrame.style.setProperty('--product-image', `url(${JSON.stringify(image.src)})`);
+        }
+        lightboxCaption.textContent = productName;
+        lightboxDescription.textContent = productDescription;
+        lightboxContact.href = `https://wa.me/919956379817?text=${encodeURIComponent(`Hello JSE Classic, I want to know more about ${productName}.`)}`;
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        closeButton.focus();
+    }
+
+    function closeLightbox() {
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        lightboxImage.src = '';
+        lightboxCaption.textContent = '';
+        lightboxDescription.textContent = '';
+        lightboxContact.href = 'https://wa.me/919956379817';
+        lightbox.style.removeProperty('--product-image');
+        if (lightboxFrame) {
+            lightboxFrame.style.removeProperty('--product-image');
+        }
+    }
+
+    galleryCards.forEach(card => {
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', `Open full image for ${card.querySelector('h3')?.textContent || 'gallery item'}`);
+
+        card.addEventListener('click', () => openLightbox(card));
+        card.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openLightbox(card);
+            }
+        });
+    });
+
+    closeButton.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', event => {
+        if (event.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && lightbox.classList.contains('open')) {
+            closeLightbox();
+        }
+    });
+});
+
 // Chatbot
 (function() {
     const panel = document.getElementById('chatbot-panel');
