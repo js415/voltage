@@ -123,13 +123,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Ensure all product buttons are properly set up
-    const productButtons = document.querySelectorAll('.product-link-btn');
+    const productButtons = document.querySelectorAll('.product-card .product-link-btn');
     productButtons.forEach(button => {
         if (!button.onclick) {
             button.addEventListener('click', function() {
                 toggleSpecs(this);
             });
         }
+    });
+});
+
+// Reveal the full stabilizer range after the first six products.
+document.addEventListener('DOMContentLoaded', () => {
+    const exploreButton = document.querySelector('.stabilizer-explore-btn');
+    const hiddenStabilizers = document.querySelectorAll('.stabilizer-extra');
+
+    if (!exploreButton || !hiddenStabilizers.length) return;
+
+    exploreButton.addEventListener('click', () => {
+        hiddenStabilizers.forEach(card => {
+            card.hidden = false;
+        });
+        exploreButton.setAttribute('aria-expanded', 'true');
+        exploreButton.hidden = true;
     });
 });
 
@@ -141,10 +157,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightboxDescription = document.getElementById('lightbox-description');
     const lightboxContact = document.getElementById('lightbox-contact');
     const closeButton = document.querySelector('.lightbox-close');
+    const prevButton = document.querySelector('.lightbox-prev');
+    const nextButton = document.querySelector('.lightbox-next');
     const lightboxFrame = document.querySelector('.lightbox-frame');
     const galleryCards = document.querySelectorAll('.stabilizer-card, .cooler-card');
+    let activeGalleryCards = [];
+    let activeGalleryIndex = 0;
 
-    if (!lightbox || !lightboxImage || !lightboxCaption || !lightboxDescription || !lightboxContact || !closeButton) return;
+    if (!lightbox || !lightboxImage || !lightboxCaption || !lightboxDescription || !lightboxContact || !closeButton || !prevButton || !nextButton) return;
 
     galleryCards.forEach(card => {
         const image = card.querySelector('img');
@@ -153,14 +173,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    function openLightbox(card) {
+    function getGalleryCards(card) {
+        const section = card.closest('.stabilizer-gallery, .cooler-gallery');
+        if (!section) return Array.from(galleryCards);
+
+        const selector = card.classList.contains('stabilizer-card') ? '.stabilizer-card' : '.cooler-card';
+        return Array.from(section.querySelectorAll(selector));
+    }
+
+    function setLightboxContent(card) {
         const image = card.querySelector('img');
         const title = card.querySelector('h3');
         const description = card.querySelector('p');
-        if (!image) return;
+        if (!image) return false;
 
         const productName = title ? title.textContent.trim() : image.alt;
-        const productDescription = description ? description.textContent.trim() : 'Get product details, price, and availability from JSE Classic.';
+        const productDescription = description ? description.textContent.trim() : 'Get product details and availability from JSE Classic.';
 
         lightboxImage.src = image.src;
         lightboxImage.alt = image.alt || '';
@@ -171,10 +199,25 @@ document.addEventListener('DOMContentLoaded', () => {
         lightboxCaption.textContent = productName;
         lightboxDescription.textContent = productDescription;
         lightboxContact.href = `https://wa.me/919956379817?text=${encodeURIComponent(`Hello JSE Classic, I want to know more about ${productName}.`)}`;
+        return true;
+    }
+
+    function openLightbox(card) {
+        activeGalleryCards = getGalleryCards(card);
+        activeGalleryIndex = Math.max(activeGalleryCards.indexOf(card), 0);
+        if (!setLightboxContent(activeGalleryCards[activeGalleryIndex])) return;
+
         lightbox.classList.add('open');
         lightbox.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
         closeButton.focus();
+    }
+
+    function moveLightbox(direction) {
+        if (!lightbox.classList.contains('open') || activeGalleryCards.length < 2) return;
+
+        activeGalleryIndex = (activeGalleryIndex + direction + activeGalleryCards.length) % activeGalleryCards.length;
+        setLightboxContent(activeGalleryCards[activeGalleryIndex]);
     }
 
     function closeLightbox() {
@@ -206,12 +249,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     closeButton.addEventListener('click', closeLightbox);
+    prevButton.addEventListener('click', () => moveLightbox(-1));
+    nextButton.addEventListener('click', () => moveLightbox(1));
     lightbox.addEventListener('click', event => {
         if (event.target === lightbox) closeLightbox();
     });
     document.addEventListener('keydown', event => {
-        if (event.key === 'Escape' && lightbox.classList.contains('open')) {
+        if (!lightbox.classList.contains('open')) return;
+
+        if (event.key === 'Escape') {
             closeLightbox();
+        } else if (event.key === 'ArrowLeft') {
+            moveLightbox(-1);
+        } else if (event.key === 'ArrowRight') {
+            moveLightbox(1);
         }
     });
 });
@@ -226,12 +277,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const messagesEl = document.getElementById('chatbot-messages');
 
     const replies = {
-        stabilizer: 'We offer AC stabilizers (TDI, DV, WM, LS series), refrigerator stabilizers (AM series), mainline & double phase stabilizers up to 20 KVA, and servo voltage stabilizers (2–500 KVA). For 1.5 ton AC we recommend TDI 4000 or DV 480. Check the Products section for details and MRP.',
-        ac: 'For 1.5 ton AC: TDI 4000 (₹6,490), DV 480 (₹9,990), WM 4000 (₹2,890), LS 4000 (₹4,990). For 2 ton: TDI 5000, DV 580, LS 5000. Choose 80V–300V range if you face low voltage often.',
+        stabilizer: 'We offer AC stabilizers (TDI, DV, WM, LS series), refrigerator stabilizers (AM series), mainline & double phase stabilizers up to 20 KVA, and servo voltage stabilizers (2–500 KVA). For 1.5 ton AC we recommend TDI 4000 or DV 480. Check the Products section for details.',
+        ac: 'For 1.5 ton AC: TDI 4000, DV 480, WM 4000, or LS 4000. For 2 ton: TDI 5000, DV 580, or LS 5000. Choose 80V–300V range if you face low voltage often.',
         cooler: 'Our air coolers: WINDSOR (75L), MAXCOOL (100L), VICTORIA (100L), CRYSTA Glass Top (110L), HAMMER Commercial (120L), MAHARAJA (150L). All have honey comb, ice chamber, oscillating louvers, and castor wheels. See Products → Air Coolers.',
         contact: 'Contact JSE Classic: Phone +91 91403 30041, +91 94510 53945, +91 93359 87539, +91 96218 15538. Email: gsiddharth833@gmail.com, Contact@classicappl.in. Address: 36/5/C, Minto Road, Prayagraj (U.P.). Website: www.classicappl.in',
         warranty: 'We offer a replacement policy on stabilizers. For exact warranty and replacement terms, please call or email us—we’ll be happy to help.',
-        price: 'Stabilizer MRPs are on the website (e.g. TDI 4000 ₹6,490, DV 480 ₹9,990). Cooler specs and details are under Products. For latest prices and offers, call or email us.',
         default: 'Thanks for your message. For product details, check our Products section. For contact: call +91 91403 30041 or email Contact@classicappl.in. You can also ask me about "stabilizer", "cooler", "contact", or "warranty".'
     };
 
@@ -242,7 +292,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (/\b(cooler|coolers|air cooler)\b/.test(t)) return replies.cooler;
         if (/\b(contact|phone|email|address|call)\b/.test(t)) return replies.contact;
         if (/\b(warranty|replacement|repair)\b/.test(t)) return replies.warranty;
-        if (/\b(price|cost|mrp|rate)\b/.test(t)) return replies.price;
         return replies.default;
     }
 
