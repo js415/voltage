@@ -15,3 +15,6 @@ node_modules/
 
 # Ignore environment files
 .env
+
+# Ignore large local archive
+ALL STABILIZER PHOTOS.zip
