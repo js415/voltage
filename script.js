@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         lightboxCaption.textContent = productName;
         lightboxDescription.textContent = productDescription;
-        lightboxContact.href = `https://wa.me/919956379817?text=${encodeURIComponent(`Hello JSE Classic, I want to know more about ${productName}.`)}`;
+        lightboxContact.href = `https://wa.me/919140330041?text=${encodeURIComponent(`Hello JSE Classic, I want to know more about ${productName}.`)}`;
         return true;
     }
 
@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lightboxImage.src = '';
         lightboxCaption.textContent = '';
         lightboxDescription.textContent = '';
-        lightboxContact.href = 'https://wa.me/919956379817';
+        lightboxContact.href = 'https://wa.me/919140330041';
         lightbox.style.removeProperty('--product-image');
         if (lightboxFrame) {
             lightboxFrame.style.removeProperty('--product-image');
