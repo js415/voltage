@@ -18,3 +18,6 @@ node_modules/
 
 # Ignore large local archive
 ALL STABILIZER PHOTOS.zip
+
+# Backup images
+**/backup_old/

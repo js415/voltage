@@ -5199,6 +5199,7 @@ iframe {
         justify-content: center;
         border-radius: 999px;
         background: rgba(226, 27, 45, 0.08);
+        transform: translateY(3px);
     }
 
     .product-banner img {
@@ -5257,6 +5258,7 @@ iframe {
 
     .nav-wrapper {
         min-height: 64px;
+        align-items: center;
     }
 
     .logo {
@@ -5269,6 +5271,10 @@ iframe {
 
     .logo-text {
         font-size: 1rem;
+    }
+
+    .nav-toggle {
+        transform: translateY(5px);
     }
 
     .nav-menu {
