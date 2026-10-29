@@ -2622,6 +2622,11 @@ body::before {
     overflow: hidden;
 }
 
+.product-banner picture {
+    display: block;
+    width: 100%;
+}
+
 .product-banner img {
     display: block;
     width: 100%;
@@ -4287,7 +4292,7 @@ body:not(.article-page) {
     }
 
     body:not(.article-page) {
-        padding-top: 118px;
+        padding-top: 68px;
     }
 
     section {
@@ -5252,6 +5257,10 @@ iframe {
         scroll-padding-top: 72px;
     }
 
+    body:not(.article-page) {
+        padding-top: 64px;
+    }
+
     .container {
         width: min(100% - 24px, 560px);
     }
@@ -5285,7 +5294,7 @@ iframe {
     }
 
     .product-banner img {
-        aspect-ratio: 1952 / 806;
+        aspect-ratio: 768 / 1024;
         min-height: 0;
         object-fit: contain;
         object-position: center top;
@@ -5426,5 +5435,11 @@ iframe {
     .stabilizer-card,
     .cooler-card {
         border-radius: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .product-banner img {
+        aspect-ratio: 768 / 1024;
     }
 }

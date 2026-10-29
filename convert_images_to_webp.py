@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parent
 SITE_IMAGES = [
     "logo.jpeg",
     "jse-products-banner.png",
+    "jse-products-banner-mobile.png",
     "hero-product-showcase.png",
     "PM.jpeg",
     "AP.jpeg",
